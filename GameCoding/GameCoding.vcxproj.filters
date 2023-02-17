@@ -63,6 +63,9 @@
     <Image Include="GameCoding.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="Skeleton.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameCoding.cpp">
