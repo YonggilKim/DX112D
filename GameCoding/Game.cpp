@@ -26,6 +26,7 @@ void Game::Init(HWND hwnd)
 	CreateVS();
 	CreateInputLayout();
 	CreatePS();
+	CreateSRV();
 }
 
 void Game::Update()
@@ -54,9 +55,9 @@ void Game::Render()
 
 		// PS
 		_deviceContext->PSSetShader(_pixelShader.Get(), nullptr, 0);
+		_deviceContext->PSSetShaderResources(0, 1, _shaderResourveView.GetAddressOf());
 
 		// OM
-
 		_deviceContext->Draw(_vertices.size(), 0);
 		_deviceContext->DrawIndexed(_indices.size(), 0, 0);
 	}
@@ -146,13 +147,19 @@ void Game::CreateGeometry()
 		//02
 		_vertices.resize(4);
 		_vertices[0].position = Vec3(-0.5f, -0.5f, 0.f);
-		_vertices[0].color = Color(1.f, 0.f, 0.f, 1.f);
+		_vertices[0].uv = Vec2(0., 1.f);
+		//_vertices[0].color = Color(1.f, 0.f, 0.f, 1.f);
 		_vertices[1].position = Vec3(-0.5f, 0.5f, 0.f);
-		_vertices[1].color = Color(1.f, 0.f, 0.f, 1.f);
+		_vertices[1].uv = Vec2(0., 0.f);
+
+		//_vertices[1].color = Color(1.f, 0.f, 0.f, 1.f);
 		_vertices[2].position = Vec3(0.5f, -0.5f, 0.f);
-		_vertices[2].color = Color(1.f, 0.f, 0.f, 1.f);
+		_vertices[2].uv = Vec2(1., 1.f);
+
+		//_vertices[2].color = Color(1.f, 0.f, 0.f, 1.f);
 		_vertices[3].position = Vec3(0.5f, 0.5f, 0.f);
-		_vertices[3].color = Color(1.f, 0.f, 0.f, 1.f);
+		_vertices[3].uv = Vec2(1., 0.f);
+		//_vertices[3].color = Color(1.f, 0.f, 0.f, 1.f);
 	}
 	//버텍스버퍼
 	{
@@ -197,7 +204,7 @@ void Game::CreateInputLayout()
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TEXCORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
 
 	const int32 count = sizeof(layout) / sizeof(D3D11_INPUT_ELEMENT_DESC);
@@ -216,6 +223,18 @@ void Game::CreatePS()
 	LoadShaderFromFile(L"Default.hlsl", "PS", "ps_5_0", _psBlob);
 	HRESULT hr = _device->CreatePixelShader(_psBlob->GetBufferPointer(), _psBlob->GetBufferSize(), nullptr, _pixelShader.GetAddressOf());
 	CHECK(hr);
+}
+
+void Game::CreateSRV()
+{
+	DirectX::TexMetadata md;
+	DirectX::ScratchImage img;
+	HRESULT hr = ::LoadFromWICFile(L"Skeleton.png", WIC_FLAGS_NONE, &md, img);
+	CHECK(hr);
+
+	hr = ::CreateShaderResourceView(_device.Get(), img.GetImages(), img.GetImageCount(), md, _shaderResourveView.GetAddressOf());
+	CHECK(hr);
+
 }
 
 void Game::LoadShaderFromFile(const wstring& path, const string& name, const string& version, ComPtr<ID3DBlob>& blob)
