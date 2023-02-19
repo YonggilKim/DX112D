@@ -51,12 +51,12 @@ private:
 	//geometry
 	vector<Vertex> _vertices;
 	ComPtr<ID3D11Buffer> _vertexBuffer = nullptr;
+	vector<uint32> _indices;
 	ComPtr<ID3D11InputLayout> _inputLayout = nullptr;
-
+	ComPtr<ID3D11Buffer> _indexBuffer = nullptr;
 	// VS
 	ComPtr<ID3D11VertexShader> _vertexShader = nullptr;
 	ComPtr<ID3DBlob> _vsBlob = nullptr;
-
 	// PS
 	ComPtr<ID3D11PixelShader> _pixelShader = nullptr;
 	ComPtr<ID3DBlob> _psBlob = nullptr;

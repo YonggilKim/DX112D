@@ -155,6 +155,7 @@
     <ResourceCompile Include="GameCoding.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="C:\Users\pc\Downloads\GameCoding_1주차+(최종코드) (1)\GameCoding\Skeleton.png" />
     <Image Include="GameCoding.ico" />
     <Image Include="small.ico" />
   </ItemGroup>

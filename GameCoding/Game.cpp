@@ -43,6 +43,7 @@ void Game::Render()
 		uint32 offset = 0;
 		// IA
 		_deviceContext->IASetVertexBuffers(0, 1, _vertexBuffer.GetAddressOf(), &stride, &offset);
+		_deviceContext->IASetIndexBuffer(_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 		_deviceContext->IASetInputLayout(_inputLayout.Get());
 		_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
@@ -57,6 +58,7 @@ void Game::Render()
 		// OM
 
 		_deviceContext->Draw(_vertices.size(), 0);
+		_deviceContext->DrawIndexed(_indices.size(), 0, 0);
 	}
 
 	RenderEnd();
@@ -140,13 +142,17 @@ void Game::CreateGeometry()
 {
 	//vertexData
 	{
-		_vertices.resize(3);
+		//13
+		//02
+		_vertices.resize(4);
 		_vertices[0].position = Vec3(-0.5f, -0.5f, 0.f);
 		_vertices[0].color = Color(1.f, 0.f, 0.f, 1.f);
-		_vertices[1].position = Vec3(0.f, 0.5f, 0.f);
+		_vertices[1].position = Vec3(-0.5f, 0.5f, 0.f);
 		_vertices[1].color = Color(1.f, 0.f, 0.f, 1.f);
 		_vertices[2].position = Vec3(0.5f, -0.5f, 0.f);
 		_vertices[2].color = Color(1.f, 0.f, 0.f, 1.f);
+		_vertices[3].position = Vec3(0.5f, 0.5f, 0.f);
+		_vertices[3].color = Color(1.f, 0.f, 0.f, 1.f);
 	}
 	//버텍스버퍼
 	{
@@ -160,7 +166,28 @@ void Game::CreateGeometry()
 		ZeroMemory(&data, sizeof(data));
 		data.pSysMem = _vertices.data();
 
-		_device->CreateBuffer(&desc, &data, _vertexBuffer.GetAddressOf());
+		HRESULT hr = _device->CreateBuffer(&desc, &data, _vertexBuffer.GetAddressOf());
+		CHECK(hr);
+	}
+
+	////인덱스 
+	{
+		_indices = { 0,1,2,2,1,3 };
+	}
+	//인덱스 버퍼
+	{
+		D3D11_BUFFER_DESC desc;
+		ZeroMemory(&desc, sizeof(desc));
+		desc.Usage = D3D11_USAGE_IMMUTABLE;
+		desc.BindFlags = D3D10_BIND_INDEX_BUFFER;
+		desc.ByteWidth = (uint32)(sizeof(uint32) * _indices.size());
+
+		D3D11_SUBRESOURCE_DATA data;
+		ZeroMemory(&data, sizeof(data));
+		data.pSysMem = _indices.data();
+
+		HRESULT hr = _device->CreateBuffer(&desc, &data, _indexBuffer.GetAddressOf());
+		CHECK(hr);
 
 	}
 }
