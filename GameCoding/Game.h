@@ -33,6 +33,8 @@ private:
 	void CreatePS();
 
 	void CreateRasterizerState();
+	void CreateSamplerState();
+	void CreateBlendState();
 	void CreateSRV();
 
 	void CreateConstantBuffer();
@@ -74,6 +76,9 @@ private:
 
 	//srv
 	ComPtr<ID3D11ShaderResourceView> _shaderResourveView = nullptr;
+
+	ComPtr<ID3D11SamplerState> _samplerState = nullptr;
+	ComPtr<ID3D11BlendState> _blendState = nullptr;
 
 private:
 	TransformData _transformData;
