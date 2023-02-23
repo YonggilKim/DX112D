@@ -24,6 +24,30 @@
     <Filter Include="소스 파일\99.Headers\Utils">
       <UniqueIdentifier>{226ee3a0-545a-4400-9a28-937eec56edbd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\00.Engine">
+      <UniqueIdentifier>{c976978f-e786-409a-8b87-a6a3233dbc2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00.Engine\Pipeline">
+      <UniqueIdentifier>{484a32c1-8bf9-417c-bc20-aa6adbecd686}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00.Engine\Pipeline\00. Geometry">
+      <UniqueIdentifier>{24255132-665d-41c8-b079-10d8f6f2e914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00.Engine\Pipeline\01. InputAssembler">
+      <UniqueIdentifier>{3e64009e-810d-44f1-96a4-717bbc1c4016}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00.Engine\Pipeline\02. VertexShader">
+      <UniqueIdentifier>{26f1e5f6-40ba-4651-bcdb-73d79c9cc31b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00.Engine\Pipeline\03. Rasterizer">
+      <UniqueIdentifier>{ba3f4e27-6f6b-425a-8e07-1c808c34c0f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00.Engine\Pipeline\04. PixelShader">
+      <UniqueIdentifier>{a23c289a-31a3-4021-a43e-ea1c318ef2e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00.Engine\Pipeline\05. OutputMerger">
+      <UniqueIdentifier>{f9846369-9bf3-4e27-8d50-87da2e0e33c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameCoding.h">
@@ -56,6 +80,9 @@
     <ClInclude Include="SimpleMath.h">
       <Filter>소스 파일\99.Headers\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics.h">
+      <Filter>소스 파일\00.Engine\Pipeline</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameCoding.rc">
@@ -82,6 +109,9 @@
     </ClCompile>
     <ClCompile Include="SimpleMath.cpp">
       <Filter>소스 파일\99.Headers\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics.cpp">
+      <Filter>소스 파일\00.Engine\Pipeline</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
