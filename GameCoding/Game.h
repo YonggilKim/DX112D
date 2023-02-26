@@ -14,7 +14,7 @@ public:
 
 private:
 	HWND _hwnd;
-	Graphics* _graphics;
+	shared_ptr<Graphics> _graphics;
 
 
 
@@ -34,17 +34,18 @@ private:
 	void LoadShaderFromFile(const wstring& path, const string& name, const string& version, ComPtr<ID3DBlob>& blob);
 
 
-
-
 private:
 	//geometry
-	vector<Vertex> _vertices;
-	VertexBuffer* _vertexBuffer;
 
-	vector<uint32> _indices;
-	IndexBuffer* _indexBuffer;
-	InputLayout* _inputLayout;
-	//ComPtr<ID3D11InputLayout> _inputLayout = nullptr;
+	//vector<Vertex> _vertices;
+	//vector<uint32> _indices;
+
+	shared_ptr<Geometry<VertexTextureData>> _geometry;
+
+
+	shared_ptr<VertexBuffer> _vertexBuffer;
+	shared_ptr<IndexBuffer> _indexBuffer;
+	shared_ptr<InputLayout> _inputLayout;
 
 	// VS
 	ComPtr<ID3D11VertexShader> _vertexShader = nullptr;
