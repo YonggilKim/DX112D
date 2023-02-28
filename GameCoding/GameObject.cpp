@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 GameObject::GameObject(ComPtr<ID3D11Device> device, ComPtr<ID3D11DeviceContext> deviceContext)
-	:_device(device)
+	: _device(device)
 {
 	_geometry = make_shared<Geometry<VertexTextureData>>();
 	GeometryHelper::CreateRectangle(_geometry);
@@ -17,6 +17,7 @@ GameObject::GameObject(ComPtr<ID3D11Device> device, ComPtr<ID3D11DeviceContext> 
 	_vertexShader->Create(L"Default.hlsl", "VS", "vs_5_0");
 
 	_inputLayout = make_shared<InputLayout>(device);
+	_inputLayout->Create(VertexTextureData::descs, _vertexShader->GetBlob());
 	_inputLayout->Create(VertexTextureData::descs, _vertexShader->GetBlob());
 
 	_pixelShader = make_shared<PixelShader>(device);
@@ -37,24 +38,31 @@ GameObject::GameObject(ComPtr<ID3D11Device> device, ComPtr<ID3D11DeviceContext> 
 	_samplerState = make_shared<SamplerState>(device);
 	_samplerState->Create();
 
+	// TEST
+	_parent->AddChild(_transform);
+	_transform->SetParent(_parent);
 }
 
 GameObject::~GameObject()
 {
+
 }
 
 void GameObject::Update()
 {
-	_localPosition.x += 0.001f;
-	Matrix matScale = Matrix::CreateScale(_localScale / 3);
-	Matrix matRotation = Matrix::CreateRotationX(_localRotation.x);
-	matRotation *= Matrix::CreateRotationY(_localRotation.y);
-	matRotation *= Matrix::CreateRotationZ(_localRotation.z);
-	Matrix matTranslation = Matrix::CreateTranslation(_localPosition);
+	Vec3 pos = _parent->GetPosition();
+	pos.x += 0.001f;
+	_parent->SetPosition(pos);
 
-	Matrix matWorld = matScale * matRotation * matTranslation; // SRT
-	_transformData.matWorld = matWorld;
+	Vec3 rot = _parent->GetRotation();
+	rot.z += 0.01f;
+	_parent->SetRotation(rot);
 
+	//Vec3 pos = _transform->GetPosition();
+	//pos.x += 0.001f;
+	//_transform->SetPosition(pos);
+
+	_transformData.matWorld = _transform->GetWorldMatrix();
 
 	_constantBuffer->CopyData(_transformData);
 }
