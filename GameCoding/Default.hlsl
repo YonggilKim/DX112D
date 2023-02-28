@@ -3,15 +3,14 @@ struct VS_INPUT
 {
 	float4 position : POSITION;
 	//float4 color : COLOR;
-	float2 uv : TEXCORD;
+	float2 uv : TEXCOORD;
 };
 
 struct VS_OUTPUT
 {
 	float4 position : SV_POSITION;
 	//float4 color : COLOR;
-	float2 uv : TEXCORD;
-
+	float2 uv : TEXCOORD;
 };
 
 cbuffer TransformData : register(b0)
@@ -20,6 +19,7 @@ cbuffer TransformData : register(b0)
 	row_major matrix matView;
 	row_major matrix matProjection;
 }
+
 // IA - VS - RS - PS - OM
 VS_OUTPUT VS(VS_INPUT input)
 {
@@ -42,5 +42,6 @@ SamplerState sampler0 : register(s0);
 float4 PS(VS_OUTPUT input) : SV_Target
 {
 	float4 color = texture0.Sample(sampler0, input.uv);
- 	return color;
+
+	return color;
 }
