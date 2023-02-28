@@ -18,7 +18,6 @@ GameObject::GameObject(ComPtr<ID3D11Device> device, ComPtr<ID3D11DeviceContext> 
 
 	_inputLayout = make_shared<InputLayout>(device);
 	_inputLayout->Create(VertexTextureData::descs, _vertexShader->GetBlob());
-	_inputLayout->Create(VertexTextureData::descs, _vertexShader->GetBlob());
 
 	_pixelShader = make_shared<PixelShader>(device);
 	_pixelShader->Create(L"Default.hlsl", "PS", "ps_5_0");

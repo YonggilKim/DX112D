@@ -9,6 +9,7 @@ public:
 
 	virtual void Init() override;
 	virtual void Update() override;
+
 	void UpdateTransform();
 
 	// Local
@@ -41,7 +42,7 @@ private:
 	Vec3 _localScale = { 1.f, 1.f, 1.f };
 	Vec3 _localRotation = { 0.f, 0.f, 0.f };
 	Vec3 _localPosition = { 0.f, 0.f, 0.f };
-	
+
 	// Cache
 	Matrix _matLocal = Matrix::Identity;
 	Matrix _matWorld = Matrix::Identity;

@@ -2,16 +2,13 @@
 struct VS_INPUT
 {
 	float4 position : POSITION;
-	//float4 color : COLOR;
-	float2 uv : TEXCORD;
+	float4 color : COLOR;
 };
 
 struct VS_OUTPUT
 {
 	float4 position : SV_POSITION;
-	//float4 color : COLOR;
-	float2 uv : TEXCORD;
-
+	float4 color : COLOR;
 };
 
 cbuffer TransformData : register(b0)
@@ -20,6 +17,7 @@ cbuffer TransformData : register(b0)
 	row_major matrix matView;
 	row_major matrix matProjection;
 }
+
 // IA - VS - RS - PS - OM
 VS_OUTPUT VS(VS_INPUT input)
 {
@@ -31,7 +29,7 @@ VS_OUTPUT VS(VS_INPUT input)
 	position = mul(position, matProjection); // P
 
 	output.position = position;
-	output.uv = input.uv;
+	output.color = input.color;
 
 	return output;
 }
@@ -41,6 +39,5 @@ SamplerState sampler0 : register(s0);
 
 float4 PS(VS_OUTPUT input) : SV_Target
 {
-	float4 color = texture0.Sample(sampler0, input.uv);
- 	return color;
+	return input.color;
 }

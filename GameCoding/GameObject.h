@@ -1,4 +1,5 @@
 #pragma once
+
 class GameObject
 {
 public:
@@ -7,6 +8,7 @@ public:
 
 	void Update();
 	void Render(shared_ptr<Pipeline> pipeline);
+
 private:
 	ComPtr<ID3D11Device> _device;
 
@@ -23,8 +25,10 @@ private:
 	shared_ptr<BlendState> _blendState;
 
 private:
+	// SRT
 	TransformData _transformData;
 	shared_ptr<ConstantBuffer<TransformData>> _constantBuffer;
+
 	shared_ptr<Transform> _transform = make_shared<Transform>();
 
 	shared_ptr<Transform> _parent = make_shared<Transform>();
