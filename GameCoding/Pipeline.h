@@ -23,7 +23,7 @@ public:
 
 	template<typename T>
 	void SetConstantBuffer(uint32 slot, uint32 scope, shared_ptr<ConstantBuffer<T>> buffer)
-	{
+	{		
 		if (scope & SS_VertexShader)
 			_deviceContext->VSSetConstantBuffers(slot, 1, buffer->GetComPtr().GetAddressOf());
 

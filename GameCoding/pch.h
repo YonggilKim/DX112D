@@ -1,4 +1,5 @@
 #pragma once
+
 #define _XM_NO_INTRINSICS_
 
 #include "Types.h"
@@ -17,6 +18,7 @@ using namespace std;
 // WIN
 #include <windows.h>
 #include <assert.h>
+
 
 // DX
 #include <d3d11.h>
@@ -39,7 +41,7 @@ using namespace Microsoft::WRL;
 
 #define CHECK(p)	assert(SUCCEEDED(p))
 
-//Engine
+// Engine
 #include "Graphics.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"

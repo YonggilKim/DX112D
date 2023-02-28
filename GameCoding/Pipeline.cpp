@@ -37,7 +37,7 @@ void Pipeline::UpdatePipeline(PipelineInfo info)
 
 void Pipeline::SetVertexBuffer(shared_ptr<VertexBuffer> buffer)
 {
-	uint32 stride = buffer->GetStride();
+ 	uint32 stride = buffer->GetStride();
 	uint32 offset = buffer->GetOffset();
 	_deviceContext->IASetVertexBuffers(0, 1, buffer->GetComPtr().GetAddressOf(), &stride, &offset);
 }

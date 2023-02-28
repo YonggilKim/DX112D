@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Shader.h"
 
-Shader::Shader(ComPtr<ID3D11Device> device)
+Shader::Shader(ComPtr<ID3D11Device> device) 
 	: _device(device)
 {
 

@@ -16,3 +16,4 @@ public:
 protected:
 	weak_ptr<GameObject> _owner;
 };
+

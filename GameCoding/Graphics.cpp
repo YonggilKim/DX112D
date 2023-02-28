@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "Graphics.h"
 
-Graphics::Graphics(HWND hand)
+Graphics::Graphics(HWND hwnd)
 {
-	_hwnd = hand;
+	_hwnd = hwnd;
 
 	CreateDeviceAndSwapChain();
 	CreateRenderTargetView();
@@ -12,6 +12,7 @@ Graphics::Graphics(HWND hand)
 
 Graphics::~Graphics()
 {
+
 }
 
 void Graphics::RenderBegin()
@@ -30,7 +31,7 @@ void Graphics::RenderEnd()
 void Graphics::CreateDeviceAndSwapChain()
 {
 	DXGI_SWAP_CHAIN_DESC desc;
-	ZeroMemory(&desc, sizeof(desc)); // 0으로 초기화
+	ZeroMemory(&desc, sizeof(desc));
 	{
 		desc.BufferDesc.Width = GWinSizeX;
 		desc.BufferDesc.Height = GWinSizeY;
@@ -44,7 +45,7 @@ void Graphics::CreateDeviceAndSwapChain()
 		desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 		desc.BufferCount = 1;
 		desc.OutputWindow = _hwnd;
-		desc.Windowed = true;
+		desc.Windowed = TRUE;
 		desc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	}
 
@@ -66,7 +67,6 @@ void Graphics::CreateDeviceAndSwapChain()
 	CHECK(hr);
 }
 
-
 void Graphics::CreateRenderTargetView()
 {
 	HRESULT hr;
@@ -75,16 +75,16 @@ void Graphics::CreateRenderTargetView()
 	hr = _swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)backBuffer.GetAddressOf());
 	CHECK(hr);
 
-	_device->CreateRenderTargetView(backBuffer.Get(), nullptr, _renderTargetView.GetAddressOf());
+	hr = _device->CreateRenderTargetView(backBuffer.Get(), nullptr, _renderTargetView.GetAddressOf());
 	CHECK(hr);
 }
 
 void Graphics::SetViewport()
 {
-	_viewport.TopLeftX = 0.f;
-	_viewport.TopLeftY = 0.f;
+	_viewport.TopLeftX = 0.0f;
+	_viewport.TopLeftY = 0.0f;
 	_viewport.Width = static_cast<float>(GWinSizeX);
 	_viewport.Height = static_cast<float>(GWinSizeY);
-	_viewport.MinDepth = 0.f;
-	_viewport.MaxDepth = 1.f;
+	_viewport.MinDepth = 0.0f;
+	_viewport.MaxDepth = 1.0f;
 }
